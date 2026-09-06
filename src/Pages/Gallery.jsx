@@ -1,233 +1,308 @@
-import { useState } from "react";
-import { Heart, PawPrint } from "lucide-react";
+import { useLayoutEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import {
+  ArrowRight,
+  Camera,
+  Heart,
+  PawPrint,
+} from "lucide-react";
 
-const galleryItems = [
-  {
-    name: "Buddy",
-    category: "Dogs",
-    image:
-      "https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=800&q=85",
-  },
-  {
-    name: "Milo",
-    category: "Cats",
-    image:
-      "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=800&q=85",
-  },
-  {
-    name: "Coco",
-    category: "Dogs",
-    image:
-      "https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=800&q=85",
-  },
-  {
-    name: "Luna",
-    category: "Cats",
-    image:
-      "https://images.unsplash.com/photo-1574158622682-e40e69881006?auto=format&fit=crop&w=800&q=85",
-  },
-  {
-    name: "Snowy",
-    category: "Rabbits",
-    image:
-      "https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?auto=format&fit=crop&w=800&q=85",
-  },
-  {
-    name: "Max",
-    category: "Dogs",
-    image:
-      "https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=800&q=85",
-  },
-  {
-    name: "Bella",
-    category: "Cats",
-    image:
-      "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?auto=format&fit=crop&w=800&q=85",
-  },
-  {
-    name: "Oreo",
-    category: "Rabbits",
-    image:
-      "https://images.unsplash.com/photo-1591561582301-7ce6588cc286?auto=format&fit=crop&w=800&q=85",
-  },
-];
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const categories = ["All", "Dogs", "Cats", "Rabbits"];
+gsap.registerPlugin(ScrollTrigger);
 
 function Gallery() {
+  const pageRef = useRef(null);
   const [activeCategory, setActiveCategory] = useState("All");
 
-  const filteredItems =
+  const pets = [
+    {
+      image:
+        "https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=800&q=80",
+      name: "Buddy",
+      category: "Dogs",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1519052537078-e6302a4968d4?auto=format&fit=crop&w=800&q=80",
+      name: "Milo",
+      category: "Cats",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?auto=format&fit=crop&w=800&q=80",
+      name: "Snowy",
+      category: "Rabbits",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=800&q=80",
+      name: "Max",
+      category: "Dogs",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=800&q=80",
+      name: "Luna",
+      category: "Cats",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1535241749838-299277b6305f?auto=format&fit=crop&w=800&q=80",
+      name: "Coco",
+      category: "Dogs",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?auto=format&fit=crop&w=800&q=80",
+      name: "Rocky",
+      category: "Dogs",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1561948955-570b270e7c36?auto=format&fit=crop&w=800&q=80",
+      name: "Bella",
+      category: "Cats",
+    },
+  ];
+
+  const categories = ["All", "Dogs", "Cats", "Rabbits"];
+
+  const filteredPets =
     activeCategory === "All"
-      ? galleryItems
-      : galleryItems.filter(
-          (item) => item.category === activeCategory
+      ? pets
+      : pets.filter((pet) => pet.category === activeCategory);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      // HERO
+      const hero = gsap.timeline({
+        defaults: {
+          ease: "power3.out",
+        },
+      });
+
+      hero
+        .from(".gallery-badge", {
+          y: 25,
+          opacity: 0,
+          duration: 0.5,
+        })
+        .from(
+          ".gallery-title",
+          {
+            y: 45,
+            opacity: 0,
+            scale: 0.96,
+            duration: 0.7,
+          },
+          "-=0.25"
+        )
+        .from(
+          ".gallery-description",
+          {
+            y: 20,
+            opacity: 0,
+            duration: 0.5,
+          },
+          "-=0.3"
+        )
+        .from(
+          ".gallery-filters",
+          {
+            y: 20,
+            opacity: 0,
+            duration: 0.5,
+          },
+          "-=0.25"
         );
 
+      // GALLERY CARDS
+      gsap.from(".gallery-card", {
+        scrollTrigger: {
+          trigger: ".gallery-grid",
+          start: "top 82%",
+          toggleActions: "play none none reverse",
+        },
+        y: 45,
+        opacity: 0,
+        scale: 0.9,
+        duration: 0.65,
+        stagger: 0.1,
+        ease: "back.out(1.4)",
+      });
+
+      // CTA
+      gsap.from(".gallery-cta", {
+        scrollTrigger: {
+          trigger: ".gallery-cta",
+          start: "top 88%",
+        },
+        y: 40,
+        opacity: 0,
+        scale: 0.96,
+        duration: 0.7,
+        ease: "power3.out",
+      });
+
+      // IMAGE HOVER
+      const cards = document.querySelectorAll(".gallery-card");
+
+      cards.forEach((card) => {
+        const image = card.querySelector(".gallery-image");
+        const overlay = card.querySelector(".gallery-overlay");
+        const heart = card.querySelector(".gallery-heart");
+
+        card.addEventListener("mouseenter", () => {
+          gsap.to(image, {
+            scale: 1.1,
+            duration: 0.45,
+            ease: "power2.out",
+          });
+
+          gsap.to(overlay, {
+            opacity: 1,
+            duration: 0.25,
+          });
+
+          gsap.to(heart, {
+            scale: 1,
+            rotation: 0,
+            duration: 0.3,
+            ease: "back.out(1.7)",
+          });
+        });
+
+        card.addEventListener("mouseleave", () => {
+          gsap.to(image, {
+            scale: 1,
+            duration: 0.4,
+            ease: "power2.out",
+          });
+
+          gsap.to(overlay, {
+            opacity: 0,
+            duration: 0.25,
+          });
+
+          gsap.to(heart, {
+            scale: 0,
+            rotation: -20,
+            duration: 0.2,
+          });
+        });
+      });
+    }, pageRef);
+
+    return () => ctx.revert();
+  }, [activeCategory]);
+
   return (
-    <div className="min-h-screen bg-[#fffaf3]">
-
-      {/* ================= HERO ================= */}
-      <section className="relative overflow-hidden bg-[#f8efe5]">
-
-        <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-[#ead2bd] opacity-50" />
-
-        <div className="absolute -bottom-24 -right-20 h-72 w-72 rounded-full bg-[#e8d8c7] opacity-50" />
-
-        <div className="relative mx-auto max-w-7xl px-5 py-20 text-center lg:px-8 lg:py-24">
-
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#6f4e37] text-white shadow-lg">
-            <PawPrint size={30} />
+    <div
+      ref={pageRef}
+      className="min-h-screen bg-[#fffaf3] text-[#3d2b1f] overflow-hidden"
+    >
+      {/* HERO */}
+      <section className="px-6 pt-24 pb-14">
+        <div className="max-w-6xl mx-auto text-center">
+          <div className="gallery-badge inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#ead8c0] text-[#8b5e3c] text-sm font-semibold mb-6">
+            <Camera size={17} />
+            Our Happy Pets
           </div>
 
-          <p className="mt-6 text-sm font-bold uppercase tracking-[0.25em] text-[#b96f49]">
-            Our Happy Patients
-          </p>
-
-          <h1 className="mt-3 text-4xl font-black text-[#3d2b1f] sm:text-5xl lg:text-6xl">
-            Little Paws,
-            <span className="block text-[#b96f49]">
-              Big Memories
+          <h1 className="gallery-title text-4xl md:text-6xl font-extrabold leading-tight">
+            Moments That
+            <span className="block text-[#9a6545]">
+              Make Us Smile
             </span>
           </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-[#735b4c] sm:text-lg">
-            Take a look at some of the adorable pets who have
-            visited PawCare and filled our clinic with happiness.
+          <p className="gallery-description max-w-2xl mx-auto mt-6 text-[#765c4c] text-lg leading-8">
+            Take a look at some of our adorable friends and the happy
+            moments they have shared with us.
           </p>
-
         </div>
       </section>
 
-      {/* ================= GALLERY ================= */}
-      <section className="mx-auto max-w-7xl px-5 py-20 lg:px-8">
-
-        {/* Heading */}
-        <div className="text-center">
-
-          <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#b96f49]">
-            Pet Gallery
-          </p>
-
-          <h2 className="mt-2 text-3xl font-black text-[#3d2b1f] sm:text-4xl">
-            Meet our adorable friends
-          </h2>
-
-          <p className="mx-auto mt-4 max-w-2xl leading-7 text-[#806756]">
-            Every pet has a unique personality and a special place
-            in our hearts.
-          </p>
-
-        </div>
-
-        {/* ================= FILTER BUTTONS ================= */}
-        <div className="mt-10 flex flex-wrap justify-center gap-3">
-
+      {/* FILTERS */}
+      <section className="px-6 pb-10">
+        <div className="gallery-filters flex flex-wrap justify-center gap-3">
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`rounded-full px-6 py-3 text-sm font-bold transition-all duration-300 ${
+              className={`px-5 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 ${
                 activeCategory === category
-                  ? "bg-[#6f4e37] text-white shadow-lg"
-                  : "border border-[#eadbc8] bg-white text-[#6b5142] hover:-translate-y-1 hover:bg-[#f1e3d2]"
+                  ? "bg-[#8b5e3c] text-white shadow-lg scale-105"
+                  : "bg-white border border-[#ead8c0] text-[#765c4c] hover:bg-[#f1e4d4]"
               }`}
             >
               {category}
             </button>
           ))}
-
         </div>
+      </section>
 
-        {/* ================= IMAGE GRID ================= */}
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-
-          {filteredItems.map((item) => (
+      {/* GALLERY */}
+      <section className="px-6 py-8">
+        <div className="gallery-grid max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {filteredPets.map((pet, index) => (
             <div
-              key={item.name}
-              className="group relative overflow-hidden rounded-[1.75rem] bg-[#f1e3d2] shadow-md"
+              key={`${pet.name}-${index}`}
+              className="gallery-card group relative h-80 rounded-3xl overflow-hidden shadow-md cursor-pointer bg-[#ead8c0]"
             >
-
-              {/* Image */}
               <img
-                src={item.image}
-                alt={item.name}
-                className="h-80 w-full object-cover transition duration-700 group-hover:scale-110"
+                src={pet.image}
+                alt={pet.name}
+                className="gallery-image w-full h-full object-cover"
               />
 
-              {/* Dark Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#3d2b1f]/80 via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100" />
-
-              {/* Pet Details */}
-              <div className="absolute inset-x-0 bottom-0 translate-y-5 p-5 opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-
-                <div className="flex items-end justify-between">
-
+              {/* OVERLAY */}
+              <div className="gallery-overlay absolute inset-0 opacity-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent">
+                <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between text-white">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-widest text-[#f1c1a6]">
-                      {item.category}
+                    <p className="text-xl font-bold">{pet.name}</p>
+                    <p className="text-sm text-white/80">
+                      {pet.category}
                     </p>
-
-                    <h3 className="mt-1 text-xl font-black text-white">
-                      {item.name}
-                    </h3>
                   </div>
 
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#c9825b]">
-                    <Heart
-                      size={18}
-                      className="fill-[#c9825b]"
-                    />
+                  <div className="gallery-heart w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center scale-0 -rotate-20">
+                    <Heart size={19} fill="currentColor" />
                   </div>
-
                 </div>
-
               </div>
-
             </div>
           ))}
-
         </div>
-
-        {/* Empty State */}
-        {filteredItems.length === 0 && (
-          <div className="py-20 text-center">
-            <PawPrint
-              size={45}
-              className="mx-auto text-[#c9825b]"
-            />
-
-            <p className="mt-4 font-semibold text-[#6b5142]">
-              No pets found in this category.
-            </p>
-          </div>
-        )}
-
       </section>
 
-      {/* ================= BOTTOM CTA ================= */}
-      <section className="mx-auto max-w-7xl px-5 pb-20 lg:px-8">
+      {/* CTA */}
+      <section className="px-6 py-16">
+        <div className="gallery-cta max-w-5xl mx-auto rounded-3xl bg-[#3d2b1f] text-white px-8 py-12 md:px-14 text-center shadow-xl">
+          <div className="w-16 h-16 mx-auto mb-5 rounded-full bg-[#ead8c0] text-[#8b5e3c] flex items-center justify-center">
+            <PawPrint size={30} />
+          </div>
 
-        <div className="rounded-[2rem] bg-[#f1e3d2] px-7 py-12 text-center sm:px-12">
-
-          <Heart
-            size={35}
-            className="mx-auto fill-[#c9825b] text-[#c9825b]"
-          />
-
-          <h2 className="mt-4 text-3xl font-black text-[#3d2b1f]">
-            Your pet could be our next star! 🐾
+          <h2 className="text-3xl md:text-4xl font-bold">
+            Want Your Pet To Be Part Of Our Story?
           </h2>
 
-          <p className="mx-auto mt-3 max-w-xl leading-7 text-[#735b4c]">
-            Bring your furry friend to PawCare and become part of
-            our happy pet family.
+          <p className="mt-4 text-[#ead8c0] max-w-2xl mx-auto leading-7">
+            Bring your furry friend to PawCare and create some happy
+            memories with us.
           </p>
 
+          <Link
+            to="/appointment"
+            className="inline-flex items-center gap-2 mt-7 px-7 py-3.5 rounded-full bg-[#ead8c0] text-[#3d2b1f] font-bold hover:bg-white transition"
+          >
+            Book Appointment
+            <ArrowRight size={18} />
+          </Link>
         </div>
-
       </section>
-
     </div>
   );
 }

@@ -1,289 +1,310 @@
+import { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
   CalendarDays,
   Heart,
+  PawPrint,
   ShieldCheck,
   Stethoscope,
   Star,
-  CheckCircle2,
 } from "lucide-react";
+import gsap from "gsap";
 
 function Home() {
+  const pageRef = useRef(null);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline();
+
+      tl.from(".hero-badge", {
+        y: 30,
+        opacity: 0,
+        duration: 0.7,
+        ease: "power3.out",
+      })
+        .from(
+          ".hero-title",
+          {
+            y: 50,
+            opacity: 0,
+            duration: 0.9,
+            ease: "power3.out",
+          },
+          "-=0.4"
+        )
+        .from(
+          ".hero-text",
+          {
+            y: 30,
+            opacity: 0,
+            duration: 0.7,
+          },
+          "-=0.5"
+        )
+        .from(
+          ".hero-buttons",
+          {
+            y: 25,
+            opacity: 0,
+            duration: 0.6,
+          },
+          "-=0.4"
+        )
+        .from(
+          ".hero-image",
+          {
+            x: 80,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out",
+          },
+          "-=0.8"
+        )
+        .from(
+          ".stats-card",
+          {
+            y: 30,
+            opacity: 0,
+            duration: 0.6,
+            stagger: 0.15,
+          },
+          "-=0.5"
+        );
+
+      gsap.from(".feature-card", {
+        scrollTrigger: {
+          trigger: ".features-section",
+          start: "top 80%",
+        },
+        y: 60,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power3.out",
+      });
+    }, pageRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <div className="overflow-hidden">
+    <div ref={pageRef} className="bg-[#fffaf3] text-[#3d2b1f]">
 
-      {/* ================= HERO SECTION ================= */}
-      <section className="relative bg-[#fffaf3]">
-        <div className="mx-auto grid min-h-[calc(100vh-80px)] max-w-7xl items-center gap-12 px-5 py-16 lg:grid-cols-2 lg:px-8 lg:py-20">
+      {/* HERO */}
+      <section className="overflow-hidden px-5 py-16 sm:py-20 lg:py-24">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
 
-          {/* Left Content */}
-          <div className="relative z-10">
-
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#eadbc8] bg-white px-4 py-2 text-sm font-semibold text-[#8a624b] shadow-sm">
-              <Heart size={16} className="fill-[#c9825b] text-[#c9825b]" />
-              Trusted care for your best friend
+          {/* Left */}
+          <div>
+            <div className="hero-badge inline-flex items-center gap-2 rounded-full bg-[#ead8c0] px-4 py-2 text-sm font-semibold text-[#765039]">
+              <PawPrint size={17} />
+              Trusted Pet Care
             </div>
 
-            <h1 className="max-w-2xl text-5xl font-black leading-[1.05] tracking-tight text-[#3d2b1f] sm:text-6xl lg:text-7xl">
-              Because every
-              <span className="block text-[#b96f49]">
-                paw deserves
+            <h1 className="hero-title mt-6 text-4xl font-extrabold leading-tight sm:text-5xl lg:text-6xl">
+              Loving Care For
+              <span className="block text-[#9a6545]">
+                Your Best Friend 🐾
               </span>
-              the best care.
             </h1>
 
-            <p className="mt-7 max-w-xl text-lg leading-8 text-[#735b4c]">
-              Loving, professional and reliable pet care for your furry
-              family members. From regular checkups to grooming, we are
-              here for every step of their journey.
+            <p className="hero-text mt-6 max-w-xl text-lg leading-8 text-[#765f50]">
+              Professional and compassionate healthcare services
+              designed to keep your pets happy, healthy and full of life.
             </p>
 
-            {/* Buttons */}
-            <div className="mt-9 flex flex-col gap-4 sm:flex-row">
-
+            <div className="hero-buttons mt-8 flex flex-wrap gap-4">
               <Link
                 to="/appointment"
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#6f4e37] px-7 py-4 font-bold text-white shadow-lg transition duration-300 hover:-translate-y-1 hover:bg-[#583c2c] hover:shadow-xl"
+                className="inline-flex items-center gap-2 rounded-xl bg-[#8b5e3c] px-6 py-3.5 font-bold text-white shadow-md transition hover:bg-[#70482f] hover:shadow-lg"
               >
                 <CalendarDays size={19} />
                 Book Appointment
-                <ArrowRight
-                  size={18}
-                  className="transition-transform duration-300 group-hover:translate-x-1"
-                />
               </Link>
 
               <Link
                 to="/services"
-                className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-[#6f4e37] px-7 py-4 font-bold text-[#6f4e37] transition duration-300 hover:bg-[#6f4e37] hover:text-white"
+                className="inline-flex items-center gap-2 rounded-xl border border-[#cdb99f] bg-white px-6 py-3.5 font-bold text-[#70482f] transition hover:bg-[#f5ecdf]"
               >
                 Explore Services
                 <ArrowRight size={18} />
               </Link>
-
-            </div>
-
-            {/* Trust Points */}
-            <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3 text-sm font-semibold text-[#6b5142]">
-
-              <div className="flex items-center gap-2">
-                <CheckCircle2 size={18} className="text-[#c9825b]" />
-                Experienced Team
-              </div>
-
-              <div className="flex items-center gap-2">
-                <CheckCircle2 size={18} className="text-[#c9825b]" />
-                Pet Friendly
-              </div>
-
-              <div className="flex items-center gap-2">
-                <CheckCircle2 size={18} className="text-[#c9825b]" />
-                24/7 Support
-              </div>
-
             </div>
           </div>
 
           {/* Right Image */}
-          <div className="relative mx-auto w-full max-w-xl lg:ml-auto">
-
-            {/* Decorative circles */}
-            <div className="absolute -right-8 -top-8 h-32 w-32 rounded-full bg-[#f1d8c6] opacity-70" />
-            <div className="absolute -bottom-10 -left-8 h-40 w-40 rounded-full bg-[#eadbc8] opacity-70" />
-
-            {/* Main Image */}
-            <div className="relative overflow-hidden rounded-[3rem] border-8 border-white shadow-2xl">
+          <div className="hero-image relative">
+            <div className="overflow-hidden rounded-[2rem] shadow-xl">
               <img
-                src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=900&q=85"
-                alt="Happy dog"
-                className="h-[520px] w-full object-cover transition duration-700 hover:scale-105"
+                src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=1000&q=80"
+                alt="Happy pet"
+                className="h-[420px] w-full object-cover sm:h-[500px]"
               />
-
-              {/* Image Overlay */}
-              <div className="absolute inset-x-5 bottom-5 rounded-2xl border border-white/30 bg-white/90 p-4 shadow-xl backdrop-blur-md">
-                <div className="flex items-center justify-between">
-
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#f1e3d2]">
-                      <Heart
-                        size={21}
-                        className="fill-[#c9825b] text-[#c9825b]"
-                      />
-                    </div>
-
-                    <div>
-                      <p className="font-bold text-[#3d2b1f]">
-                        Happy Pets
-                      </p>
-                      <p className="text-xs text-[#806756]">
-                        Healthy • Loved • Happy
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-1 rounded-full bg-[#fff4e8] px-3 py-2 text-sm font-bold text-[#8a624b]">
-                    <Star
-                      size={15}
-                      className="fill-[#c9825b] text-[#c9825b]"
-                    />
-                    4.9
-                  </div>
-
-                </div>
-              </div>
             </div>
 
             {/* Floating Card */}
-            <div className="absolute -left-6 top-16 hidden rounded-2xl border border-[#eadbc8] bg-white p-4 shadow-xl sm:block">
-              <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#f1e3d2] text-[#6f4e37]">
-                  <Stethoscope size={21} />
-                </div>
+            <div className="absolute -bottom-6 left-4 flex items-center gap-3 rounded-2xl bg-white p-4 shadow-xl sm:left-8">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#ead8c0] text-[#8b5e3c]">
+                <Heart size={23} className="fill-current" />
+              </div>
 
-                <div>
-                  <p className="text-sm font-extrabold text-[#3d2b1f]">
-                    Expert Care
-                  </p>
-                  <p className="text-xs text-[#806756]">
-                    Professional Team
-                  </p>
-                </div>
+              <div>
+                <p className="font-bold">Happy Pets</p>
+                <p className="text-sm text-[#765f50]">
+                  5,000+ cared for
+                </p>
               </div>
             </div>
 
+            {/* Rating */}
+            <div className="absolute right-4 top-5 flex items-center gap-2 rounded-2xl bg-white px-4 py-3 shadow-xl sm:right-7">
+              <Star
+                size={19}
+                className="fill-[#c58b52] text-[#c58b52]"
+              />
+              <span className="font-bold">4.9</span>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ================= STATS ================= */}
-      <section className="border-y border-[#eadbc8] bg-white">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 px-5 py-10 sm:grid-cols-4 lg:px-8">
+      {/* STATS */}
+      <section className="px-5 pb-20">
+        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-4 lg:grid-cols-4">
 
-          <div className="border-[#eadbc8] px-5 text-center sm:border-r">
-            <p className="text-3xl font-black text-[#6f4e37]">
-              500+
-            </p>
-            <p className="mt-1 text-sm font-medium text-[#806756]">
-              Happy Pets
-            </p>
-          </div>
-
-          <div className="border-[#eadbc8] px-5 text-center lg:border-r">
-            <p className="text-3xl font-black text-[#6f4e37]">
+          <div className="stats-card rounded-2xl bg-white p-6 text-center shadow-sm">
+            <h3 className="text-3xl font-extrabold text-[#8b5e3c]">
               10+
-            </p>
-            <p className="mt-1 text-sm font-medium text-[#806756]">
-              Expert Doctors
-            </p>
-          </div>
-
-          <div className="mt-8 border-[#eadbc8] px-5 text-center sm:mt-0 sm:border-r">
-            <p className="text-3xl font-black text-[#6f4e37]">
-              5+
-            </p>
-            <p className="mt-1 text-sm font-medium text-[#806756]">
+            </h3>
+            <p className="mt-1 text-sm text-[#765f50]">
               Years Experience
             </p>
           </div>
 
-          <div className="mt-8 px-5 text-center sm:mt-0">
-            <p className="text-3xl font-black text-[#6f4e37]">
-              24/7
+          <div className="stats-card rounded-2xl bg-white p-6 text-center shadow-sm">
+            <h3 className="text-3xl font-extrabold text-[#8b5e3c]">
+              5K+
+            </h3>
+            <p className="mt-1 text-sm text-[#765f50]">
+              Happy Pets
             </p>
-            <p className="mt-1 text-sm font-medium text-[#806756]">
-              Emergency Support
+          </div>
+
+          <div className="stats-card rounded-2xl bg-white p-6 text-center shadow-sm">
+            <h3 className="text-3xl font-extrabold text-[#8b5e3c]">
+              15+
+            </h3>
+            <p className="mt-1 text-sm text-[#765f50]">
+              Expert Doctors
+            </p>
+          </div>
+
+          <div className="stats-card rounded-2xl bg-white p-6 text-center shadow-sm">
+            <h3 className="text-3xl font-extrabold text-[#8b5e3c]">
+              24/7
+            </h3>
+            <p className="mt-1 text-sm text-[#765f50]">
+              Pet Support
             </p>
           </div>
 
         </div>
       </section>
 
-      {/* ================= WHY PAWCARE ================= */}
-      <section className="bg-[#f8efe5]">
-        <div className="mx-auto max-w-7xl px-5 py-20 lg:px-8">
+      {/* FEATURES */}
+      <section className="features-section px-5 pb-20">
+        <div className="mx-auto max-w-6xl">
 
-          <div className="mx-auto max-w-2xl text-center">
-            <span className="text-sm font-bold uppercase tracking-[0.2em] text-[#b96f49]">
+          <div className="mb-10 text-center">
+            <span className="text-sm font-bold uppercase tracking-wider text-[#9a6545]">
               Why Choose Us
             </span>
 
-            <h2 className="mt-3 text-4xl font-black text-[#3d2b1f] sm:text-5xl">
-              Care that comes
-              <span className="text-[#b96f49]"> from the heart.</span>
+            <h2 className="mt-3 text-3xl font-extrabold sm:text-4xl">
+              Everything Your Pet Needs
             </h2>
 
-            <p className="mt-5 leading-7 text-[#735b4c]">
-              We believe pets are family. That's why we combine
-              professional expertise with genuine love and attention.
+            <p className="mx-auto mt-4 max-w-2xl text-[#765f50]">
+              Quality care, experienced professionals and a loving
+              environment for every pet.
             </p>
           </div>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-3">
 
-            {/* Card 1 */}
-            <div className="group rounded-3xl border border-[#eadbc8] bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-2 hover:shadow-xl">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#f1e3d2] text-[#6f4e37] transition group-hover:bg-[#6f4e37] group-hover:text-white">
-                <Heart size={27} />
+            <div className="feature-card rounded-3xl border border-[#eadcca] bg-white p-7 shadow-sm transition hover:-translate-y-2 hover:shadow-xl">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#f1e4d4] text-[#8b5e3c]">
+                <Stethoscope size={28} />
               </div>
 
-              <h3 className="mt-6 text-xl font-extrabold text-[#3d2b1f]">
-                Loving Care
+              <h3 className="mt-6 text-xl font-bold">
+                Expert Veterinary Care
               </h3>
 
-              <p className="mt-3 leading-7 text-[#806756]">
-                Every pet is treated with patience, kindness and
-                the love they deserve.
+              <p className="mt-3 leading-7 text-[#765f50]">
+                Professional health checkups and treatment from
+                experienced veterinary experts.
               </p>
             </div>
 
-            {/* Card 2 */}
-            <div className="group rounded-3xl border border-[#eadbc8] bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-2 hover:shadow-xl">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#f1e3d2] text-[#6f4e37] transition group-hover:bg-[#6f4e37] group-hover:text-white">
-                <ShieldCheck size={27} />
+            <div className="feature-card rounded-3xl border border-[#eadcca] bg-white p-7 shadow-sm transition hover:-translate-y-2 hover:shadow-xl">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#f1e4d4] text-[#8b5e3c]">
+                <Heart size={28} />
               </div>
 
-              <h3 className="mt-6 text-xl font-extrabold text-[#3d2b1f]">
-                Trusted & Safe
+              <h3 className="mt-6 text-xl font-bold">
+                Loving Environment
               </h3>
 
-              <p className="mt-3 leading-7 text-[#806756]">
-                Your pet's safety and comfort always remain our
-                highest priority.
+              <p className="mt-3 leading-7 text-[#765f50]">
+                We treat every pet with kindness, patience and
+                genuine care.
               </p>
             </div>
 
-            {/* Card 3 */}
-            <div className="group rounded-3xl border border-[#eadbc8] bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-2 hover:shadow-xl">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#f1e3d2] text-[#6f4e37] transition group-hover:bg-[#6f4e37] group-hover:text-white">
-                <Stethoscope size={27} />
+            <div className="feature-card rounded-3xl border border-[#eadcca] bg-white p-7 shadow-sm transition hover:-translate-y-2 hover:shadow-xl">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#f1e4d4] text-[#8b5e3c]">
+                <ShieldCheck size={28} />
               </div>
 
-              <h3 className="mt-6 text-xl font-extrabold text-[#3d2b1f]">
-                Expert Professionals
+              <h3 className="mt-6 text-xl font-bold">
+                Safe & Trusted
               </h3>
 
-              <p className="mt-3 leading-7 text-[#806756]">
-                Our experienced team provides reliable and
-                professional pet care.
+              <p className="mt-3 leading-7 text-[#765f50]">
+                Your pet's safety and comfort are always our top
+                priorities.
               </p>
             </div>
 
           </div>
+        </div>
+      </section>
 
-          {/* CTA */}
-          <div className="mt-12 flex justify-center">
-            <Link
-              to="/services"
-              className="group inline-flex items-center gap-2 font-bold text-[#6f4e37] transition hover:text-[#b96f49]"
-            >
-              View all our services
-              <ArrowRight
-                size={18}
-                className="transition-transform group-hover:translate-x-1"
-              />
-            </Link>
-          </div>
+      {/* CTA */}
+      <section className="px-5 pb-20">
+        <div className="mx-auto max-w-6xl rounded-3xl bg-[#3d2b1f] px-6 py-12 text-center text-white sm:px-12">
+
+          <PawPrint className="mx-auto" size={36} />
+
+          <h2 className="mt-4 text-3xl font-extrabold sm:text-4xl">
+            Give Your Pet the Care They Deserve
+          </h2>
+
+          <p className="mx-auto mt-4 max-w-2xl text-[#e5d8ce]">
+            Book an appointment today and take the first step toward
+            a healthier and happier pet.
+          </p>
+
+          <Link
+            to="/appointment"
+            className="mt-7 inline-flex items-center gap-2 rounded-xl bg-white px-7 py-3.5 font-bold text-[#3d2b1f] transition hover:bg-[#f0e1cf]"
+          >
+            <CalendarDays size={19} />
+            Book Appointment
+          </Link>
 
         </div>
       </section>
