@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+
 import {
   Scissors,
   Stethoscope,
@@ -245,13 +246,20 @@ function Services() {
             complete care to keep your furry friends healthy and happy.
           </p>
 
-          <Link
-            to="/appointment"
-            className="services-hero-btn inline-flex items-center gap-2 mt-8 px-7 py-3.5 rounded-full bg-[#8b5e3c] text-white font-semibold shadow-lg hover:bg-[#70482f] transition"
-          >
-            Book Appointment
-            <ArrowRight size={18} />
-          </Link>
+          {/* ================= BOOK APPOINTMENT CTA ================= */}
+<div className="text-center mt-10">
+  <p className="text-[#735f52] mb-4">
+    Need personalized care for your furry friend?
+  </p>
+
+  <Link
+    to="/appointment"
+    className="inline-flex items-center gap-2 bg-[#8b5e3c] hover:bg-[#70482f] text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+  >
+    Book Appointment
+    <ArrowRight size={18} />
+  </Link>
+</div>
         </div>
       </section>
 

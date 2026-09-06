@@ -213,75 +213,111 @@ function Home() {
         </div>
       </section>
 
-      {/* FEATURES */}
-      <section className="features-section px-5 pb-20">
-        <div className="mx-auto max-w-6xl">
+     {/* ================= WHY CHOOSE US ================= */}
+<section className="why-section px-6 md:px-12 lg:px-20 py-12 md:py-14">
+  <div className="max-w-6xl mx-auto">
 
-          <div className="mb-10 text-center">
-            <span className="text-sm font-bold uppercase tracking-wider text-[#9a6545]">
-              Why Choose Us
-            </span>
+    {/* Heading */}
+    <div className="why-title text-center max-w-2xl mx-auto">
+      <span className="text-[#a66a44] font-semibold text-sm tracking-wider">
+        WHY CHOOSE US
+      </span>
 
-            <h2 className="mt-3 text-3xl font-extrabold sm:text-4xl">
-              Everything Your Pet Needs
-            </h2>
+      <h2 className="text-3xl md:text-4xl font-bold text-[#3d2b1f] mt-2">
+        Everything Your Pet Needs
+      </h2>
 
-            <p className="mx-auto mt-4 max-w-2xl text-[#765f50]">
-              Quality care, experienced professionals and a loving
-              environment for every pet.
+      <p className="text-[#735f52] mt-3 text-base md:text-lg leading-relaxed">
+        Quality care, experienced professionals and a loving environment
+        for every pet.
+      </p>
+    </div>
+
+    {/* Trust Stats */}
+    <div className="flex flex-wrap justify-center items-center gap-3 md:gap-6 mt-7 mb-7">
+      
+      <div className="bg-[#f3e5d8] px-4 py-2 rounded-full text-sm font-semibold text-[#70482f]">
+        🐾 1000+ Happy Pets
+      </div>
+
+      <div className="bg-[#f3e5d8] px-4 py-2 rounded-full text-sm font-semibold text-[#70482f]">
+        ⭐ 4.9/5 Rating
+      </div>
+
+      <div className="bg-[#f3e5d8] px-4 py-2 rounded-full text-sm font-semibold text-[#70482f]">
+        🩺 Expert Care
+      </div>
+
+    </div>
+
+    {/* Cards */}
+    <div className="why-cards grid md:grid-cols-2 gap-5 max-w-4xl mx-auto">
+
+      {/* Card 1 */}
+      <div className="why-card group bg-white rounded-2xl p-6 border border-[#eadbce] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+
+        <div className="flex items-start gap-4">
+
+          <div className="w-12 h-12 shrink-0 rounded-xl bg-[#f3e5d8] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+            <ShieldCheck
+              size={25}
+              className="text-[#a66a44]"
+            />
+          </div>
+
+          <div>
+            <h3 className="text-xl font-bold text-[#3d2b1f]">
+              Expert Veterinary Care
+            </h3>
+
+            <p className="text-[#735f52] mt-2 leading-relaxed">
+              Professional health checkups and treatment from experienced
+              veterinary experts.
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
-
-            <div className="feature-card rounded-3xl border border-[#eadcca] bg-white p-7 shadow-sm transition hover:-translate-y-2 hover:shadow-xl">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#f1e4d4] text-[#8b5e3c]">
-                <Stethoscope size={28} />
-              </div>
-
-              <h3 className="mt-6 text-xl font-bold">
-                Expert Veterinary Care
-              </h3>
-
-              <p className="mt-3 leading-7 text-[#765f50]">
-                Professional health checkups and treatment from
-                experienced veterinary experts.
-              </p>
-            </div>
-
-            <div className="feature-card rounded-3xl border border-[#eadcca] bg-white p-7 shadow-sm transition hover:-translate-y-2 hover:shadow-xl">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#f1e4d4] text-[#8b5e3c]">
-                <Heart size={28} />
-              </div>
-
-              <h3 className="mt-6 text-xl font-bold">
-                Loving Environment
-              </h3>
-
-              <p className="mt-3 leading-7 text-[#765f50]">
-                We treat every pet with kindness, patience and
-                genuine care.
-              </p>
-            </div>
-
-            <div className="feature-card rounded-3xl border border-[#eadcca] bg-white p-7 shadow-sm transition hover:-translate-y-2 hover:shadow-xl">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#f1e4d4] text-[#8b5e3c]">
-                <ShieldCheck size={28} />
-              </div>
-
-              <h3 className="mt-6 text-xl font-bold">
-                Safe & Trusted
-              </h3>
-
-              <p className="mt-3 leading-7 text-[#765f50]">
-                Your pet's safety and comfort are always our top
-                priorities.
-              </p>
-            </div>
-
-          </div>
         </div>
-      </section>
+
+      </div>
+
+      {/* Card 2 */}
+      <div className="why-card group bg-white rounded-2xl p-6 border border-[#eadbce] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+
+        <div className="flex items-start gap-4">
+
+          <div className="w-12 h-12 shrink-0 rounded-xl bg-[#f3e5d8] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+            <Heart
+              size={25}
+              className="text-[#a66a44]"
+              fill="#a66a44"
+            />
+          </div>
+
+          <div>
+            <h3 className="text-xl font-bold text-[#3d2b1f]">
+              Loving Environment
+            </h3>
+
+            <p className="text-[#735f52] mt-2 leading-relaxed">
+              We treat every pet with kindness, patience and genuine care.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    {/* Small Bottom Message */}
+    <div className="text-center mt-7">
+      <p className="text-[#806b5d] text-sm">
+        ❤️ Because your pet deserves care that feels like home.
+      </p>
+    </div>
+
+  </div>
+</section>
 
       {/* CTA */}
       <section className="px-5 pb-20">
